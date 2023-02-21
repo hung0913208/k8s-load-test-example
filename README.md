@@ -2,11 +2,22 @@
   
   ![banner](docs/ts-js-k6.png)
 
-# Template to use TypeScript with k6
+# Alpaca quality system checking
+# Thank for TypeScript with k6
 
 ![.github/workflows/push.yml](https://github.com/k6io/template-typescript/workflows/.github/workflows/push.yml/badge.svg?branch=master)
-
+[![pipeline status](https://gitlab.alpaca.vn/alpaca-projects/devops/alpaca-infrastructure-quality-tools/badges/main/pipeline.svg)](https://gitlab.alpaca.vn/alpaca-projects/devops/alpaca-infrastructure-quality-tools/-/commits/main)
 </div>
+
+# Introduction
+
+One of key factors to estimate the quality of any project is performance and error rates per MR. To make everything become easier with this new kind of requirement, this project is initialize to contain every load checking tools in order to dig down the quality of the infrastructure and business logic layers.
+
+## What is the key objective of this project?
+
+- Regular load testing and report
+- Estimate the production quality 
+- Standalize the way of checking new vendor
 
 This repository provides a scaffolding project to start using TypeScript in your k6 scripts.
 
