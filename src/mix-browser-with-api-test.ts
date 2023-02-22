@@ -1,4 +1,4 @@
-import { chromium } from 'k6/x/browser';
+import { chromium } from 'k6/experimental/browser';
 import { check } from 'k6';
 import http from 'k6/http';
 
