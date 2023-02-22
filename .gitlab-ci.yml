@@ -17,3 +17,20 @@
 # https://gitlab.com/gitlab-org/gitlab/-/blob/master/lib/gitlab/ci/templates/Getting-Started.gitlab-ci.yml
 
 include: 'templates/load-performance-testing.gitlab-ci.yaml'
+
+generate:
+  extends: .pack
+  artifacts:
+    paths:
+      - dist/
+    expire_in: 1 min
+
+benchmark:
+  variables:
+    K6_REPORT: 'load_performance.json'
+  extends: .benchmark
+  dependencies: 
+    - generate
+  artifacts:
+    reports:
+      load_performance: load-performance.json
