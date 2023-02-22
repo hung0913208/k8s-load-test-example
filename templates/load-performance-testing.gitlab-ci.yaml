@@ -30,10 +30,10 @@ stages:
     - docker:dind
   script:
     - wget https://github.com/grafana/xk6-browser/releases/download/v${K6_VERSION}/xk6-browser-v${K6_VERSION}-linux-amd64.tar.gz
-    - tar xf k6-v${K6_VERSION}-linux-amd64.tar.gz
+    - tar xf xk6-browser-v${K6_VERSION}-linux-amd64.tar.gz
     - |
       for K6_CASE in $(find ${K6_SUITE} -type f -name "*.js"); do
-        K6_BROWSER_ENABLED=true ./k6-browser-v${K6_VERSION}-linux-amd64//xk6-browser  \
+        K6_BROWSER_ENABLED=true ./xk6-browser-v${K6_VERSION}-linux-amd64//xk6-browser  \
             run ${K6_CASE}                                          \
             --summary-export=${K6_REPORT}                           \
             ${K6_OPTIONS}
