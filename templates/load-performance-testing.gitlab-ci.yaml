@@ -1,0 +1,40 @@
+# To contribute improvements to CI/CD templates, please follow the Development guide at:
+# https://docs.gitlab.com/ee/development/cicd/templates.html
+# This specific template is located at:
+# https://gitlab.com/gitlab-org/gitlab/-/blob/master/lib/gitlab/ci/templates/Verify/Load-Performance-Testing.gitlab-ci.yml
+
+# Read more about the feature here: https://docs.gitlab.com/ee/ci/testing/code_quality.html
+
+stages:
+  - build
+  - test
+  - deploy
+  - performance
+
+.pack:
+  stage: build
+  image: node:12.13.0
+  script:
+    - yarn --frozen-lockfile
+    - yarn webpack
+
+.benchmark:
+  stage: performance
+  image: docker:git
+  variables:
+    K6_VERSION: 0.41.0
+    K6_OPTIONS: ''
+    K6_REPORT: 'benchmark.json'
+    K6_SUITE: './dist'
+  services:
+    - docker:dind
+  script:
+    - wget https://github.com/grafana/k6/releases/download/v${K6_VERSION}/k6-v${K6_VERSION}-linux-amd64.tar.gz
+    - tar xf k6-v${K6_VERSION}-linux-amd64.tar.gz
+    - |
+      for K6_CASE in $(find ${K6_SUITE} -type f -name "*.js"); do
+        ./k6-v${K6_VERSION}-linux-amd64/k6                  \
+            run ${K6_CASE}                                  \
+            --summary-export=/workspace/${K6_REPORT}        \
+            ${K6_OPTIONS}
+      done
