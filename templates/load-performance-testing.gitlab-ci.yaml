@@ -22,6 +22,7 @@ stages:
   stage: performance
   image: docker:git
   variables:
+    XK6_BROWSER_VERSION: 0.8.1
     K6_VERSION: 0.41.0
     K6_OPTIONS: ''
     K6_REPORT: 'performance.json'
