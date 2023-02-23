@@ -31,6 +31,11 @@ stages:
   script:
     - wget https://github.com/grafana/k6/releases/download/v${K6_VERSION}/k6-v${K6_VERSION}-linux-amd64.tar.gz
     - tar xf k6-v${K6_VERSION}-linux-amd64.tar.gz
+    - wget https://github.com/grafana/xk6-browser/releases/download/v${XK6_BROWSER_VERSION}/xk6-browser-v${XK6_BROWSER_VERSION}-linux-amd64.tar.gz
+    - tar xf k6-v${K6_VERSION}-linux-amd64.tar.gz
+    - tar xf xk6-browser-v${XK6_BROWSER_VERSION}-linux-amd64.tar.gz
+    - mv ./k6-v${K6_VERSION}-linux-amd64/k6 ./k6
+    - mv ./xk6-browser-v${XK6_BROWSER_VERSION}-linux-amd64/xk6-browser ./xk6-browser
     - |
       for K6_CASE in $(find ${K6_SUITE} -type f -name "*.js"); do
         ./k6-v${K6_VERSION}-linux-amd64/k6                  \
