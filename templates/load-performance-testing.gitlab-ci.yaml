@@ -39,8 +39,8 @@ stages:
     - mv ./xk6-browser-v${XK6_BROWSER_VERSION}-linux-amd64/xk6-browser ./xk6-browser
     - |
       for K6_CASE in $(find ${K6_SUITE} -type f -name "*.js"); do
-        ./k6-v${K6_VERSION}-linux-amd64/k6                  \
-            run ${K6_CASE}                                  \
-            --summary-export=/workspace/${K6_REPORT}        \
+        ./k6                                          \
+            run ${K6_CASE}                            \
+            --summary-export=/workspace/${K6_REPORT}  \
             ${K6_OPTIONS}
       done
