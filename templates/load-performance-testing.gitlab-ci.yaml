@@ -27,8 +27,6 @@ stages:
     K6_OPTIONS: ''
     K6_REPORT: 'performance.json'
     K6_SUITE: './dist'
-  services:
-    - docker:dind
   script:
     - wget https://github.com/grafana/k6/releases/download/v${K6_VERSION}/k6-v${K6_VERSION}-linux-amd64.tar.gz
     - tar xf k6-v${K6_VERSION}-linux-amd64.tar.gz
