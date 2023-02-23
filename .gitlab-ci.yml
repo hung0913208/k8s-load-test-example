@@ -26,8 +26,12 @@ generate:
     expire_in: 1 min
 
 benchmark:
+  image: ubuntu:latest
   variables:
     K6_REPORT: 'load_performance.json'
+  before_script:
+    - apt update
+    - apt install -y wget chromium-browser
   extends: .benchmark
   dependencies: 
     - generate
