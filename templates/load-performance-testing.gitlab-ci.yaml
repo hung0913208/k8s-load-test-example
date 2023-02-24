@@ -55,7 +55,7 @@ stages:
         -v "$(pwd)":/sitespeed.io sitespeedio/sitespeed.io:$SITESPEED_VERSION \
         --plugins.add ./gitlab-exporter                                       \
         --outputFolder sitespeed-results                                      \
-        $SITESPEED_TEST_CASE                                                  \
+        /sitespeed.io/$SITESPEED_TEST_CASE                                    \
         $SITESPEED_OPTIONS
     - mv sitespeed-results/data/performance.json performance.json
   artifacts:
