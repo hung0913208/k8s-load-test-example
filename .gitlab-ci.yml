@@ -28,7 +28,7 @@ generate:
 benchmark:
   image: ubuntu:latest
   variables:
-    K6_REPORT: 'load_performance.json'
+    K6_REPORT: 'load-performance.json'
   before_script:
     - apt update
     - apt install -y wget chromium-browser
