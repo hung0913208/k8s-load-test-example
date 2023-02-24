@@ -9,7 +9,7 @@ generate:
 
 capture:
   variables:
-    SITESPEED_TEST_CASE: ''
+    SITESPEED_TEST_CASE: './src/sitespeed-test.js'
   extends: .capture
   dependencies: 
     - generate
