@@ -26,8 +26,6 @@ stages:
     K6_VERSION: 0.41.0
     K6_TEST_CASE: ''
     K6_OPTIONS: ''
-  services:
-    - docker:dind
   script:
     - wget https://github.com/grafana/k6/releases/download/v${K6_VERSION}/k6-v${K6_VERSION}-linux-amd64.tar.gz
     - tar xf k6-v${K6_VERSION}-linux-amd64.tar.gz
@@ -39,24 +37,21 @@ stages:
 
 .capture:
   stage:  capture
-  image: docker:git
+  image: sitespeedio/sitespeed.io:26.1.0
   variables:
     SITESPEED_TEST_CASE: ''
-    SITESPEED_VERSION: 14.1.0
     SITESPEED_OPTIONS: ''
-  services:
-    - docker:stable-dind
   script:
     - mkdir gitlab-exporter
     - wget -O ./gitlab-exporter/index.js https://gitlab.com/gitlab-org/gl-performance/raw/1.1.0/index.js
     - mkdir sitespeed-results
+    - npm i -g sitespeed.io 
     - |
-      docker run --shm-size=1g --rm                                           \
-        -v "$(pwd)":/sitespeed sitespeedio/sitespeed.io:$SITESPEED_VERSION    \
-        --plugins.add ./gitlab-exporter                                       \
-        --outputFolder sitespeed-results                                      \
-        /sitespeed/$SITESPEED_TEST_CASE                                       \
-        $SITESPEED_OPTIONS
+      sitespeed.io -b chrome                        \
+        --plugins.add ./gitlab-exporter             \
+        --outputFolder sitespeed-results            \
+        $SITESPEED_OPTIONS                          \
+        $SITESPEED_TEST_CASE
     - mv sitespeed-results/data/performance.json performance.json
   artifacts:
     paths:
