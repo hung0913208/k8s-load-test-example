@@ -36,23 +36,20 @@ stages:
             ${K6_OPTIONS}
 
 .capture:
-  stage:  capture
-  image: sitespeedio/sitespeed.io:26.1.0
+  stage: capture
+  image: docker:git
   variables:
-    SITESPEED_TEST_CASE: ''
-    SITESPEED_OPTIONS: ''
+    XK6_BROWSER_VERSION: 0.8.1
+    XK6_TEST_CASE: ''
+    XK6_OPTIONS: ''
   script:
-    - mkdir gitlab-exporter
-    - wget -O ./gitlab-exporter/index.js https://gitlab.com/gitlab-org/gl-performance/raw/1.1.0/index.js
-    - mkdir sitespeed-results
-    - npm i -g sitespeed.io 
+    - wget https://github.com/grafana/xk6-browser/releases/download/v${XK6_BROWSER_VERSION}/xk6-browser-v${XK6_BROWSER_VERSION}-linux-amd64.tar.gz
+    - tar xf xk6-browser-v${XK6_VERSION}-linux-amd64.tar.gz
     - |
-      sitespeed.io -b chrome                        \
-        --plugins.add ./gitlab-exporter             \
-        --outputFolder sitespeed-results            \
-        $SITESPEED_OPTIONS                          \
-        $SITESPEED_TEST_CASE
-    - mv sitespeed-results/data/performance.json performance.json
+      ./xk6-browser-v${K6_VERSION}-linux-amd64/xk6-browser  \
+            run ${K6_TEST_CASE}                             \
+            --summary-export=performance.json               \
+            ${XK6_OPTIONS}
   artifacts:
     paths:
       - performance.json
