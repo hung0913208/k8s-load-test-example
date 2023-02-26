@@ -9,7 +9,7 @@ generate:
 
 capture:
   variables:
-    XK6_TEST_CASE: 'dist/xk6-browser-example.js'
+    XK6_TEST_CASE: 'dist/xk6-browser-test.js'
   extends: .capture
   dependencies: 
     - generate
