@@ -28,10 +28,11 @@ stages:
     XK6_OPTIONS: ''
   script:
     - apk update
-    - apk add firefox
+    - apk add chromium
     - wget https://github.com/grafana/xk6-browser/releases/download/v${XK6_BROWSER_VERSION}/xk6-browser-v${XK6_BROWSER_VERSION}-linux-amd64.tar.gz
     - tar xf xk6-browser-v${XK6_BROWSER_VERSION}-linux-amd64.tar.gz
     - |
+      export XK6_HEADLESS=true
       ./xk6-browser-v${XK6_BROWSER_VERSION}-linux-amd64/xk6-browser   \
             run ${XK6_TEST_CASE}                                      \
             --summary-export=performance.json                         \
