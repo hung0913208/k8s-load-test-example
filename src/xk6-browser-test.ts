@@ -9,7 +9,7 @@ import { chromium } from 'k6/x/browser';
 
 export default async function () {
   const browser = chromium.launch({
-    headless: __ENV.XK6_HEADLESS ? true : false,
+    headless: true
   });
   const page = browser.newPage();
 
