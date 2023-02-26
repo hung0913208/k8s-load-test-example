@@ -9,7 +9,7 @@ generate:
 
 capture:
   variables:
-    SITESPEED_TEST_CASE: 'src/xk6-browser-test.js'
+    XK6_TEST_CASE: 'src/xk6-browser-test.js'
   extends: .capture
   dependencies: 
     - generate
