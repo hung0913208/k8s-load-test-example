@@ -9,8 +9,8 @@ generate:
 
 browser:
   variables:
-    PLAYWRIGHT_TEST_CASE: 'src/login-abic-phase1-test-playwright.ts'
-  extends: .playwright
+    XK6_TEST_CASE: 'dist/xk6-browser-test.js'
+  extends: .browser
   dependencies: 
     - generate
   artifacts:

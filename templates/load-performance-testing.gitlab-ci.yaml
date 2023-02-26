@@ -27,7 +27,8 @@ stages:
     XK6_TEST_CASE: ''
     XK6_OPTIONS: ''
   script:
-    - apk add chromium-chromedriver
+    - apk update
+    - apk add firefox
     - wget https://github.com/grafana/xk6-browser/releases/download/v${XK6_BROWSER_VERSION}/xk6-browser-v${XK6_BROWSER_VERSION}-linux-amd64.tar.gz
     - tar xf xk6-browser-v${XK6_BROWSER_VERSION}-linux-amd64.tar.gz
     - |
