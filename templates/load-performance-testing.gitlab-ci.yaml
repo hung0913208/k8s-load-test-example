@@ -19,23 +19,7 @@ stages:
     - yarn --frozen-lockfile
     - yarn webpack
 
-.benchmark:
-  stage: performance
-  image: docker:git
-  variables:
-    K6_VERSION: 0.41.0
-    K6_TEST_CASE: ''
-    K6_OPTIONS: ''
-  script:
-    - wget https://github.com/grafana/k6/releases/download/v${K6_VERSION}/k6-v${K6_VERSION}-linux-amd64.tar.gz
-    - tar xf k6-v${K6_VERSION}-linux-amd64.tar.gz
-    - |
-      ./k6-v${K6_VERSION}-linux-amd64/k6           \
-            run ${K6_TEST_CASE}                    \
-            --summary-export=performance.json      \
-            ${K6_OPTIONS}
-
-.capture:
+.browser:
   stage: capture
   image: docker:git
   variables:
@@ -54,6 +38,37 @@ stages:
   artifacts:
     paths:
       - performance.json
-      - sitespeed-results/
     reports:
       performance: performance.json
+
+.playwright:
+  stage: capture
+  image: node:12.13.0
+  variables:
+    PLAYWRIGHT_TEST_CASE: ''
+  script:
+    - npm init playwright@latest
+    - npx playwright test ${PLAYWRIGHT_TEST_CASE}
+  artifacts:
+    paths:
+      - performance.json
+    reports:
+      performance: performance.json
+
+.benchmark:
+  stage: performance
+  image: docker:git
+  variables:
+    K6_VERSION: 0.41.0
+    K6_TEST_CASE: ''
+    K6_OPTIONS: ''
+  script:
+    - wget https://github.com/grafana/k6/releases/download/v${K6_VERSION}/k6-v${K6_VERSION}-linux-amd64.tar.gz
+    - tar xf k6-v${K6_VERSION}-linux-amd64.tar.gz
+    - |
+      ./k6-v${K6_VERSION}-linux-amd64/k6           \
+            run ${K6_TEST_CASE}                    \
+            --summary-export=performance.json      \
+            ${K6_OPTIONS}
+
+

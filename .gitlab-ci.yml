@@ -7,10 +7,10 @@ generate:
       - dist/
     expire_in: 1 min
 
-capture:
+browser:
   variables:
-    XK6_TEST_CASE: 'dist/xk6-browser-test.js'
-  extends: .capture
+    PLAYWRIGHT_TEST_CASE: 'src/login-abic-phase1-test-playwright.ts'
+  extends: .playwright
   dependencies: 
     - generate
   artifacts:
